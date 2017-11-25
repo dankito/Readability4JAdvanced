@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 
 
 fun main(args: Array<String>) {
-    TestDataGenerator().generateTestData("faz-1", "http://www.faz.net/aktuell/wirtschaft/unternehmen/bmw-steckt-viel-geld-in-erforschung-der-batteriezelle-15308519.html") // set test case name and url here
+    TestDataGenerator().generateTestData("", "") // set test case name and url here
 }
 
 
