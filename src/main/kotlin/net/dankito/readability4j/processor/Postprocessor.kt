@@ -63,9 +63,15 @@ open class Postprocessor {
 
     protected open fun fixRelativeImageUris(element: Element, scheme: String, prePath: String, pathBase: String) {
         element.getElementsByTag("img").forEach { img ->
-            val src = img.attr("src")
-            if(src.isNotBlank()) {
-                img.attr("src", toAbsoluteURI(src, scheme, prePath, pathBase))
+            val dataSrc = img.attr("data-src") // load data-src; CHANGE: this is not in Mozilla's Readability
+            if(dataSrc.isNotBlank()) {
+                img.attr("src", toAbsoluteURI(dataSrc, scheme, prePath, pathBase))
+            }
+            else {
+                val src = img.attr("src")
+                if (src.isNotBlank()) {
+                    img.attr("src", toAbsoluteURI(src, scheme, prePath, pathBase))
+                }
             }
         }
     }
