@@ -35,7 +35,7 @@ abstract class TestDataGeneratorBase {
     protected open fun generateMetadataJson(article: Article): String {
         val metadata = ArticleMetadata(article.title, article.byline, article.excerpt, article.dir)
 
-        return objectMapper.writeValueAsString(metadata)
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(metadata)
     }
 
     protected open fun writeFile(testCaseFolder: File, fileName: String, fileContent: String) {
