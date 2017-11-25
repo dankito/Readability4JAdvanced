@@ -11,7 +11,7 @@ import java.util.*
 
 
 fun main(args: Array<String>) {
-    TestDataReParser().reParseMozillasTestData()
+    TestDataReParser().reParseTestData()
 }
 
 
@@ -22,7 +22,13 @@ class TestDataReParser : TestDataGeneratorBase() {
     }
 
 
-    fun reParseMozillasTestData() {
+    fun reParseTestData() {
+        reParseMozillasTestData()
+
+        reParseAdditionalTestData()
+    }
+
+    private fun reParseMozillasTestData() {
         Arrays.asList(
 
                 "001", "002", "ars-1", "base-url", "basic-tags-cleaning", "bbc-1", "blogger",
@@ -49,6 +55,16 @@ class TestDataReParser : TestDataGeneratorBase() {
 
     private fun reParseMozillasTestData(testCaseName: String) {
         reParseTestData(Readability4JTest.ReadabilityFakeTestUrl, "test-pages", testCaseName)
+    }
+
+    private fun reParseAdditionalTestData() {
+        reParseAdditionalTestData("http://www.bento.de/haha/jamaika-aus-hier-sind-exklusiv-die-satirischen-fdp-wahlplakate-fuer-die-neuwahlen-1876078/", "bento-1")
+        reParseAdditionalTestData("http://www.faz.net/aktuell/wirtschaft/unternehmen/bmw-steckt-viel-geld-in-erforschung-der-batteriezelle-15308519.html", "faz-1")
+        reParseAdditionalTestData("https://projekte.sueddeutsche.de/paradisepapers/wirtschaft/carstensen-und-der-pharma-milliardaer-e624335/", "sueddeutsche-paradise-papers")
+    }
+
+    private fun reParseAdditionalTestData(url: String, testCaseName: String) {
+        reParseTestData(url, "additional-test-pages", testCaseName)
     }
 
     private fun reParseTestData(url: String, testFolderName: String, testCaseName: String) {
