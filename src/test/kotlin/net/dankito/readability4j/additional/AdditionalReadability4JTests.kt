@@ -8,6 +8,11 @@ open class AdditionalReadability4JTests : Readability4JTestBase() {
 
 
     @Test
+    fun testBento1() {
+        testPage("http://www.bento.de/haha/jamaika-aus-hier-sind-exklusiv-die-satirischen-fdp-wahlplakate-fuer-die-neuwahlen-1876078/", "bento-1")
+    }
+
+    @Test
     fun testFaz1() {
         testPage("http://www.faz.net/aktuell/wirtschaft/unternehmen/bmw-steckt-viel-geld-in-erforschung-der-batteriezelle-15308519.html", "faz-1")
     }
