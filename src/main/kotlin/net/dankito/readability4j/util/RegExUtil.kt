@@ -34,6 +34,8 @@ open class RegExUtil {
         const val WhitespaceDefaultPattern = "^\\s*$"
 
         const val HasContentDefaultPattern = "\\S$"
+
+        const val RemoveImageDefaultPattern = "author|avatar|thumbnail" // CHANGE: this is not in Mozilla's Readability
     }
 
 
@@ -63,6 +65,8 @@ open class RegExUtil {
 
     protected val hasContent: Pattern
 
+    protected val removeImage: Pattern
+
 
     constructor(unlikelyCandidatesPattern: String = UnlikelyCandidatesDefaultPattern, okMaybeItsACandidatePattern: String = OkMaybeItsACandidateDefaultPattern,
                 positivePattern: String = PositiveDefaultPattern, negativePattern: String = NegativeDefaultPattern,
@@ -70,7 +74,7 @@ open class RegExUtil {
                 replaceFontsPattern: String = ReplaceFontsDefaultPattern, normalizePattern: String = NormalizeDefaultPattern,
                 videosPattern: String = VideosDefaultPattern, nextLinkPattern: String = NextLinkDefaultPattern,
                 prevLinkPattern: String = PrevLinkDefaultPattern, whitespacePattern: String = WhitespaceDefaultPattern,
-                hasContentPattern: String = HasContentDefaultPattern) {
+                hasContentPattern: String = HasContentDefaultPattern, removeImagePattern: String = RemoveImageDefaultPattern) {
         this.unlikelyCandidates = Pattern.compile(unlikelyCandidatesPattern, Pattern.CASE_INSENSITIVE)
         this.okMaybeItsACandidate = Pattern.compile(okMaybeItsACandidatePattern, Pattern.CASE_INSENSITIVE)
         this.positive = Pattern.compile(positivePattern, Pattern.CASE_INSENSITIVE)
@@ -84,6 +88,7 @@ open class RegExUtil {
         this.prevLink = Pattern.compile(prevLinkPattern, Pattern.CASE_INSENSITIVE)
         this.whitespace = Pattern.compile(whitespacePattern)
         this.hasContent = Pattern.compile(hasContentPattern)
+        this.removeImage = Pattern.compile(removeImagePattern)
     }
 
 
@@ -121,6 +126,14 @@ open class RegExUtil {
 
     open fun isVideo(matchString: String): Boolean {
         return videos.matcher(matchString).find()
+    }
+
+    open fun keepImage(matchString: String): Boolean { // CHANGE: this is not in Mozilla's Readability
+        if((isNegative(matchString) && isPositive(matchString) == false) || removeImage.matcher(matchString).find()) {
+            return false
+        }
+
+        return true
     }
 
 }

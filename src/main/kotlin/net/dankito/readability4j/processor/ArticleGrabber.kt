@@ -670,7 +670,7 @@ open class ArticleGrabber(protected val options: ReadabilityOptions, protected v
                         ((siblingReadability.contentScore + contentBonus) >= siblingScoreThreshold)) {
                     append = true
                 }
-                else if(sibling.tagName() == "p") {
+                else if(sibling.tagName() == "p" || containsImageToKeep(sibling)) { // keep images; CHANGE: this is not in Mozilla's Readability
                     val linkDensity = this.getLinkDensity(sibling)
                     val nodeContent = this.getInnerText(sibling, regEx)
                     val nodeLength = nodeContent.length
@@ -703,6 +703,28 @@ open class ArticleGrabber(protected val options: ReadabilityOptions, protected v
         return articleContent
     }
 
+    private fun containsImageToKeep(element: Element): Boolean {
+        val images = element.select("img")
+        if(images.size > 0) {
+            if(isImageElementToKeep(element)) {
+                images.forEach { image ->
+                    if(isImageElementToKeep(image) == false) {
+                        return false
+                    }
+                }
+
+                return true
+            }
+        }
+
+        return false
+    }
+
+    private fun isImageElementToKeep(element: Element): Boolean {
+        val matchString = element.id() + " " + element.className()
+
+        return regEx.keepImage(matchString)
+    }
 
 
     /*          Fifth step: Prepare article            */
