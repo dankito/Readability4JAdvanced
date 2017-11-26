@@ -18,6 +18,11 @@ open class AdditionalReadability4JTests : Readability4JTestBase() {
     }
 
     @Test
+    fun testSpiegel1() {
+        testPage("http://www.spiegel.de/politik/deutschland/fdp-vize-wolfgang-kubicki-weist-gruenen-angriffe-scharf-zurueck-a-1180321.html", "spiegel-1")
+    }
+
+    @Test
     fun testSueddeutscheParadisePapers() {
         testPage("https://projekte.sueddeutsche.de/paradisepapers/wirtschaft/carstensen-und-der-pharma-milliardaer-e624335", "sueddeutsche-paradise-papers")
     }
